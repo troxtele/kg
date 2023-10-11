@@ -1,11 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>45 15 Second Shot Clock</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta property="og:title" content="45 Second Shot Clock - 15 Second Beep" />
+    <meta
+      name="description"
+      content="International Rules 45 Second Shot Clock | 15 | 5 4 3 2 1 Countdown"
+    />
+    <meta name="keywords" content="International Rules,45,Shot Clock" />
+    <meta name="author" content="Gregg Ding" />
+    <meta property="og:url" content="https://eightball.app/4515/" />
+    <meta
+      property="og:image"
+      content="https://eightball.app/flags/australia-flag-au.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="International Rules 45 Second Shot Clock"
+    />
+
+    <!-- Robot font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Import Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <style>
+      html {
+        font-family: "Roboto", sans-serif !important;
+      }
+      .flash {
+        animation: flash 1s linear infinite; /* add flashing animation */
+        color: red; /* change color of countdown digits */
+      }
+
+      @keyframes flash {
+        50% {
+          opacity: 0;
+        }
+      }
+    </style>
   </head>
-  <body>
-    <h1>bXkgd2hhdHN1cCAtPiAwMTU4MTA0MTMwMQ==</h1>
+  <body class="bg-slate-900 text-white text-center p-4">
+    <h2
+      class="mb-2 mt-0 text-4xl font-medium leading-tight text-base text-xl md:text-2xl"
+    >
+      International Rules 45 Second Shot Clock
+    </h2>
+    <h3
+      class="mb-2 mt-0 text-4xl font-medium leading-tight text-xl md:text-2xl"
+    >
+      Beeps at 15 and 5 4 3 2 1 - Buzzer at 0
+    </h3>
+
+    <div
+      class="wrapper grid grid-cols-span-2 sm:flex justify-center sm:px-8 sm:justify-between gap-6 max-w-[70rem] m-auto py-5 mt-8 sm:mt-10"
+    >
+      <!-- left -->
+      <div
+        class="font-bold flex flex-col sm:justify-between gap-5 py-2.5 lg:py-4 sm:gap-7 row-start-2"
+      >
+        <!-- Reset button -->
+        <button
+          id="reset"
+          class="py-3 sm:py-3 md:py-5 lg:py-7 w-[8rem] sm:w-[10rem] md:w-[12rem] lg:w-[16rem] text-2xl md:text-3xl lg:text-5xl bg-blue-900 text-white font-bold rounded-full"
+        >
+          Reset
+        </button>
+
+        <!-- Start button -->
+        <button
+          id="start"
+          class="py-3 sm:py-3 md:py-5 lg:py-7 w-[8rem] sm:w-[10rem] md:w-[12rem] lg:w-[16rem] text-2xl md:text-3xl lg:text-5xl bg-orange-700 text-white font-bold rounded-full"
+        >
+          Start
+        </button>
+      </div>
+      <!-- Countdown -->
+      <div class="font-bold col-span-2 flex justify-center">
+        <span
+          id="countdown"
+          class="text-[10rem] sm:text-[12rem] md:text-[16rem] lg:text-[24rem] !leading-[0.85]"
+          >45</span
+        >
+      </div>
+      <!-- right -->
+      <div
+        class="font-bold flex flex-col sm:justify-between gap-5 py-2.5 lg:py-4 sm:gap-7 row-start-2"
+      >
+        <!-- Yell X -->
+        <button
+          id="ext-2"
+          class="py-3 sm:py-3 md:py-5 lg:py-7 w-[8rem] sm:w-[10rem] md:w-[12rem] lg:w-[16rem] text-2xl md:text-3xl lg:text-5xl bg-amber-300 text-white font-bold rounded-full"
+        >
+          Yell X
+        </button>
+        <!-- Red X -->
+        <button
+          id="ext-1"
+          class="py-3 sm:py-3 md:py-5 lg:py-7 w-[8rem] sm:w-[10rem] md:w-[12rem] lg:w-[16rem] text-2xl md:text-3xl lg:text-5xl bg-rose-800 text-white font-bold rounded-full"
+        >
+          Red X
+        </button>
+      </div>
+    </div>
+
+    <div class="flex justify-center sm:mt-4 md:mt-6 mb-12">
+      <div class="font-bold">
+        <!-- Reset All button -->
+        <button
+          id="reset-all"
+          class="py-4 sm:py-4 md:py-6 w-[10rem] sm:w-[12rem] md:w-[16rem] lg:w-[20rem] text-xl sm:text-2xl md:text-3xl lg:text-5xl bg-teal-600 text-white font-bold rounded-full ml-2"
+        >
+          Reset All
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const countdown = document.getElementById("countdown");
+      const resetAllButton = document.getElementById("reset-all");
+      // when the screen is more than 640px wide, use the desktop buttons
+      let resetButton = document.getElementById("reset");
+      let startButton = document.getElementById("start");
+      let ext1Button = document.getElementById("ext-1");
+      let ext2Button = document.getElementById("ext-2");
+
+      let countdownValue = 45; // start countdown at 45 seconds
+      let interval; // declare interval variable
+      let countdownStarted = false; // boolean variable to track if countdown has started or not
+      countdown.textContent = countdownValue;
+
+      function resetCountdown() {
+        sound.pause();
+        beep.pause();
+        countdownValue = 45; // reset countdown to 45 seconds
+        countdown.textContent = countdownValue;
+        clearInterval(interval);
+        startButton.textContent = "Start";
+        countdownStarted = false;
+        countdown.classList.remove("flash"); // add flash class to countdown element
+      }
+
+      const sound = new Audio("6seconds.wav"); // create new audio element for beep sound
+      const beep = new Audio("beep.wav"); // create new audio element for beep sound
+
+      function startCountdown() {
+        if (startButton.textContent.indexOf("Start") !== -1) {
+          countdownStarted = true; // set countdownStarted to true when countdown starts
+          interval = setInterval(() => {
+            countdownValue--;
+            countdown.textContent = countdownValue;
+            if (countdownValue === 5) {
+              countdown.classList.add("flash"); // add flash class to countdown element
+              sound.currentTime = 0;
+              sound.play(); // play beep sound
+            }
+            if (countdownValue === 15) {
+              sound.currentTime = 0;
+              beep.play();
+            }
+
+            if (countdownValue === 0) {
+              clearInterval(interval);
+            }
+          }, 1000);
+          startButton.textContent = "Pause";
+        } else {
+          clearInterval(interval);
+
+          startButton.textContent = "Start";
+        }
+      }
+
+      function addTime(button) {
+        if (button.disabled || !countdownStarted) {
+          // only allow button to be clicked if countdown has not started
+          return;
+        }
+        countdownValue += 15;
+        countdown.textContent = countdownValue;
+
+        if (countdownValue > 5) {
+          sound.pause(); // play beep sound
+          countdown.classList.remove("flash"); // add flash class to countdown element
+          button.classList.add("bg-gray-500"); // add flash class to countdown element
+        }
+        button.disabled = true;
+      }
+
+      resetButton.addEventListener("click", resetCountdown);
+      startButton.addEventListener("click", () => {
+        startCountdown();
+        sound.play();
+        sound.pause();
+        beep.play();
+        beep.pause();
+      });
+      ext1Button.addEventListener("click", () => addTime(ext1Button));
+      ext2Button.addEventListener("click", () => addTime(ext2Button));
+      resetAllButton.addEventListener("click", () => {
+        resetCountdown();
+        ext1Button.disabled = false;
+        ext2Button.disabled = false;
+        ext1Button.classList.remove("bg-gray-500");
+        ext2Button.classList.remove("bg-gray-500");
+      });
+    </script>
   </body>
 </html>
